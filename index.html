@@ -1,0 +1,2413 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#F4F4F1" />
+  <title>THE H GROUP | Architectural Eyewear & Maison</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,600&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" type="text/css" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/light/style.css" />
+  <link rel="stylesheet" type="text/css" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css" />
+  <link rel="stylesheet" type="text/css" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/fill/style.css" />
+  <style>
+    :root {
+      --bg-canvas: #F4F4F1;
+      --bg-surface: #FFFFFF;
+      --bg-subtle: #EAEAE5;
+      --bg-obsidian: #121214;
+      --ink-primary: #121214;
+      --ink-secondary: #56565C;
+      --ink-muted: #86868E;
+      --gold-accent: #B68F40;
+      --gold-deep: #8A6822;
+      --gold-soft: rgba(182, 143, 64, 0.14);
+      --hairline: rgba(18, 18, 20, 0.08);
+      --radius-outer: 26px;
+      --radius-inner: 20px;
+      --radius-pill: 999px;
+      --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+      --ease-spring: cubic-bezier(0.32, 0.72, 0, 1);
+      --font-display: 'Cormorant Garamond', Georgia, serif;
+      --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      --safe-bottom: env(safe-area-inset-bottom, 0px);
+      --safe-top: env(safe-area-inset-top, 0px);
+    }
+
+    html[dir="rtl"] {
+      --font-display: 'IBM Plex Sans Arabic', sans-serif;
+      --font-sans: 'IBM Plex Sans Arabic', sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      background-color: var(--bg-canvas);
+      color: var(--ink-primary);
+      font-family: var(--font-sans);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: clip;
+    }
+
+    body {
+      background-color: var(--bg-canvas);
+      overflow-x: clip;
+    }
+
+    body.lock-scroll {
+      overflow: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: 35;
+      pointer-events: none;
+      opacity: 0.022;
+      background-image: radial-gradient(#121214 0.75px, transparent 0.75px);
+      background-size: 16px 16px;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    button { font-family: inherit; border: none; background: none; cursor: pointer; color: inherit; }
+    section[id] { scroll-margin-top: 78px; }
+
+    .container {
+      width: 100%;
+      max-width: 1380px;
+      margin: 0 auto;
+      padding: 0 28px;
+    }
+
+    /* Top Strip */
+    .top-strip {
+      background: var(--bg-obsidian);
+      color: #F4F4F1;
+      font-size: 11.5px;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      padding: calc(8px + var(--safe-top)) 16px 8px;
+      text-align: center;
+      line-height: 1.4;
+    }
+
+    html[dir="rtl"] .top-strip {
+      letter-spacing: 0;
+      font-size: 12px;
+    }
+
+    /* Sticky Header */
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      height: 68px;
+      background: rgba(244, 244, 241, 0.88);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--hairline);
+    }
+
+    .header-inner {
+      height: 100%;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 26px;
+    }
+
+    .desktop-nav {
+      display: flex;
+      align-items: center;
+      gap: 26px;
+      font-size: 13.5px;
+      font-weight: 500;
+      color: var(--ink-secondary);
+    }
+
+    .desktop-nav a:hover { color: var(--ink-primary); }
+
+    /* Animated 2-Line Morphing Hamburger (Mobile) */
+    .menu-burger {
+      display: none;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      margin-inline-start: -8px;
+    }
+
+    .burger-lines {
+      width: 20px;
+      height: 12px;
+      position: relative;
+    }
+
+    .burger-lines span {
+      position: absolute;
+      left: 0;
+      width: 100%;
+      height: 1.6px;
+      background: var(--ink-primary);
+      border-radius: 2px;
+      transition: transform 0.38s var(--ease-spring), top 0.38s var(--ease-spring);
+    }
+
+    .burger-lines span:first-child { top: 2px; }
+    .burger-lines span:last-child { top: 9px; width: 72%; }
+
+    .menu-burger.active .burger-lines span:first-child {
+      top: 5.5px;
+      transform: rotate(45deg);
+    }
+
+    .menu-burger.active .burger-lines span:last-child {
+      top: 5.5px;
+      width: 100%;
+      transform: rotate(-45deg);
+    }
+
+    .brand-logo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .brand-logo img {
+      height: 44px;
+      width: auto;
+      display: block;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 8px;
+    }
+
+    .lang-btn {
+      min-height: 40px;
+      padding: 0 13px;
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--hairline);
+      background: rgba(255, 255, 255, 0.72);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      transition: transform 0.25s var(--ease-spring);
+    }
+
+    .lang-btn:active { transform: scale(0.96); }
+
+    .bag-trigger {
+      min-height: 40px;
+      padding: 0 14px;
+      border-radius: var(--radius-pill);
+      background: var(--ink-primary);
+      color: #FFFFFF;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 12.5px;
+      font-weight: 500;
+      transition: transform 0.25s var(--ease-spring);
+    }
+
+    .bag-trigger:active { transform: scale(0.96); }
+
+    .bag-badge {
+      min-width: 20px;
+      height: 20px;
+      padding: 0 6px;
+      border-radius: 999px;
+      background: var(--gold-accent);
+      color: #121214;
+      font-size: 11px;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Full-Screen Mobile Menu Drawer */
+    .mobile-menu-overlay {
+      position: fixed;
+      inset: 0;
+      top: 68px;
+      z-index: 39;
+      background: rgba(244, 244, 241, 0.97);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      padding: 28px 24px calc(100px + var(--safe-bottom));
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(-12px);
+      transition: opacity 0.35s var(--ease-out), transform 0.35s var(--ease-out);
+      overflow-y: auto;
+    }
+
+    .mobile-menu-overlay.open {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+
+    .mobile-nav-list {
+      list-style: none;
+      display: grid;
+      gap: 6px;
+    }
+
+    .mobile-nav-list a {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 4px;
+      border-bottom: 1px solid var(--hairline);
+      font-family: var(--font-display);
+      font-size: 28px;
+      font-weight: 500;
+    }
+
+    /* Double-Bezel Hardware Architecture */
+    .bezel-shell {
+      background: rgba(18, 18, 20, 0.04);
+      border: 1px solid rgba(18, 18, 20, 0.065);
+      padding: 6px;
+      border-radius: var(--radius-outer);
+    }
+
+    .bezel-core {
+      background: var(--bg-surface);
+      border-radius: var(--radius-inner);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9), 0 16px 36px -22px rgba(18, 18, 20, 0.08);
+      overflow: hidden;
+    }
+
+    /* Hero Section */
+    .hero-section {
+      min-height: calc(100svh - 102px);
+      display: flex;
+      align-items: center;
+      padding: 28px 0 44px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 5fr 7fr;
+      gap: 36px;
+      align-items: center;
+      width: 100%;
+    }
+
+    .eyebrow-pill {
+      display: inline-block;
+      padding: 5px 13px;
+      border-radius: var(--radius-pill);
+      background: var(--gold-soft);
+      color: var(--gold-deep);
+      font-size: 10.5px;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+
+    html[dir="rtl"] .eyebrow-pill {
+      letter-spacing: 0;
+      font-size: 11.5px;
+    }
+
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(2.4rem, 4.5vw, 4.35rem);
+      font-weight: 500;
+      line-height: 1.08;
+      letter-spacing: -0.02em;
+      margin-bottom: 16px;
+      padding-bottom: 4px;
+    }
+
+    html[dir="rtl"] .hero-title {
+      line-height: 1.28;
+      letter-spacing: 0;
+      font-size: clamp(2rem, 3.8vw, 3.5rem);
+    }
+
+    .hero-title em {
+      font-style: italic;
+      color: var(--gold-accent);
+    }
+
+    html[dir="rtl"] .hero-title em { font-style: normal; }
+
+    .hero-sub {
+      font-size: 15px;
+      line-height: 1.65;
+      color: var(--ink-secondary);
+      max-width: 44ch;
+      margin-bottom: 26px;
+    }
+
+    .hero-ctas {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 28px;
+    }
+
+    .btn-primary-island {
+      min-height: 50px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 7px 7px 7px 22px;
+      border-radius: var(--radius-pill);
+      background: var(--ink-primary);
+      color: #FFFFFF;
+      font-size: 13.5px;
+      font-weight: 600;
+      white-space: nowrap;
+      transition: transform 0.35s var(--ease-spring), background 0.3s var(--ease-out);
+    }
+
+    html[dir="rtl"] .btn-primary-island {
+      padding: 7px 22px 7px 7px;
+    }
+
+    .btn-primary-island .icon-orb {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: transform 0.35s var(--ease-spring), background 0.3s var(--ease-out);
+    }
+
+    .btn-primary-island:hover .icon-orb {
+      background: var(--gold-accent);
+      color: #121214;
+      transform: translate(2px, -2px);
+    }
+
+    .btn-primary-island:active { transform: scale(0.98); }
+
+    .btn-secondary-pill {
+      min-height: 50px;
+      padding: 0 20px;
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(18, 18, 20, 0.18);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-size: 13.5px;
+      font-weight: 500;
+      white-space: nowrap;
+      transition: background 0.25s var(--ease-out), transform 0.25s var(--ease-spring);
+    }
+
+    .btn-secondary-pill:active { transform: scale(0.98); }
+
+    /* Horizontal Momentum Lens Swatches */
+    .lens-switcher-box {
+      padding-top: 20px;
+      border-top: 1px solid var(--hairline);
+    }
+
+    .lens-switcher-label {
+      font-size: 12px;
+      color: var(--ink-muted);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .lens-swatches {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      overflow-x: auto;
+      scrollbar-width: none;
+      padding: 2px 0;
+    }
+
+    .lens-swatches::-webkit-scrollbar { display: none; }
+
+    .swatch-btn {
+      width: 42px;
+      height: 42px;
+      flex-shrink: 0;
+      border-radius: 50%;
+      padding: 4px;
+      border: 1.5px solid transparent;
+      transition: transform 0.25s var(--ease-spring), border-color 0.25s var(--ease-out);
+    }
+
+    .swatch-btn.active {
+      border-color: var(--ink-primary);
+      transform: scale(1.06);
+    }
+
+    .swatch-dot {
+      display: block;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.28);
+    }
+
+    .hero-visual-stage {
+      position: relative;
+      aspect-ratio: 16 / 10.8;
+      background: #E7E6E1;
+    }
+
+    .hero-visual-stage img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .hero-caption-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 14px 18px;
+      background: var(--bg-surface);
+      border-top: 1px solid var(--hairline);
+      font-size: 13px;
+    }
+
+    /* Sections */
+    .section-space { padding: 96px 0; }
+
+    .section-head-stack { margin-bottom: 32px; }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 3.3vw, 3.05rem);
+      font-weight: 500;
+      line-height: 1.14;
+      margin-bottom: 10px;
+    }
+
+    html[dir="rtl"] .section-title { line-height: 1.32; }
+
+    .section-desc {
+      font-size: 14.5px;
+      color: var(--ink-secondary);
+      max-width: 58ch;
+      line-height: 1.65;
+    }
+
+    /* Momentum Scroll-Snap Filter Rail */
+    .catalog-toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 28px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--hairline);
+    }
+
+    .filter-rail {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      overflow-x: auto;
+      scrollbar-width: none;
+      scroll-snap-type: x proximity;
+      -webkit-overflow-scrolling: touch;
+      max-width: 100%;
+    }
+
+    .filter-rail::-webkit-scrollbar { display: none; }
+
+    .filter-pill {
+      scroll-snap-align: start;
+      flex-shrink: 0;
+      min-height: 44px;
+      padding: 0 18px;
+      border-radius: var(--radius-pill);
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--ink-secondary);
+      background: rgba(18, 18, 20, 0.05);
+      transition: background 0.25s var(--ease-out), color 0.25s var(--ease-out);
+    }
+
+    .filter-pill.active {
+      background: var(--ink-primary);
+      color: #FFFFFF;
+    }
+
+    /* Product Cards with Native Touch Scroll-Snap 3-Slide Track! */
+    .product-gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 26px;
+    }
+
+    .card-slider-wrap {
+      position: relative;
+      background: #F6F6F3;
+    }
+
+    .card-snap-track {
+      display: flex;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      overscroll-behavior-x: contain;
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+      aspect-ratio: 4 / 3.35;
+    }
+
+    .card-snap-track::-webkit-scrollbar { display: none; }
+
+    .card-slide {
+      flex: 0 0 100%;
+      width: 100%;
+      height: 100%;
+      scroll-snap-align: center;
+      scroll-snap-stop: always;
+      position: relative;
+      cursor: pointer;
+    }
+
+    .card-slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .card-dots-pill {
+      position: absolute;
+      bottom: 12px;
+      left: 12px;
+      z-index: 3;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 6px;
+      border-radius: var(--radius-pill);
+      background: rgba(255, 255, 255, 0.9);
+      border: 1px solid var(--hairline);
+    }
+
+    html[dir="rtl"] .card-dots-pill {
+      left: auto;
+      right: 12px;
+    }
+
+    .slide-pill-btn {
+      min-height: 28px;
+      padding: 0 9px;
+      border-radius: var(--radius-pill);
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--ink-secondary);
+      transition: all 0.22s var(--ease-out);
+    }
+
+    .slide-pill-btn.active {
+      background: var(--ink-primary);
+      color: #FFFFFF;
+    }
+
+    .expand-orb-btn {
+      position: absolute;
+      bottom: 12px;
+      right: 12px;
+      z-index: 3;
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.94);
+      border: 1px solid var(--hairline);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+    }
+
+    html[dir="rtl"] .expand-orb-btn {
+      right: auto;
+      left: 12px;
+    }
+
+    .product-meta {
+      padding: 18px 20px 20px;
+      background: var(--bg-surface);
+      display: grid;
+      gap: 14px;
+    }
+
+    .product-meta-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .product-series {
+      font-size: 11.5px;
+      color: var(--ink-muted);
+      margin-bottom: 4px;
+    }
+
+    .product-name {
+      font-family: var(--font-display);
+      font-size: 23px;
+      font-weight: 600;
+      line-height: 1.2;
+      cursor: pointer;
+    }
+
+    .price-block {
+      text-align: end;
+      flex-shrink: 0;
+    }
+
+    .price-tag {
+      font-size: 16px;
+      font-weight: 700;
+      display: block;
+    }
+
+    .tabby-micro {
+      font-size: 11px;
+      color: var(--ink-muted);
+    }
+
+    .product-meta-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding-top: 12px;
+      border-top: 1px solid var(--hairline);
+    }
+
+    .product-specs-inline {
+      font-size: 12.5px;
+      color: var(--ink-secondary);
+      line-height: 1.4;
+    }
+
+    .thumb-add-btn {
+      min-height: 44px;
+      padding: 0 18px;
+      border-radius: var(--radius-pill);
+      background: var(--ink-primary);
+      color: #FFFFFF;
+      font-size: 12.5px;
+      font-weight: 600;
+      white-space: nowrap;
+      flex-shrink: 0;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: transform 0.25s var(--ease-spring), background 0.25s var(--ease-out);
+    }
+
+    .thumb-add-btn:active { transform: scale(0.96); }
+
+    /* Craftsmanship 4-Tile Grid */
+    .craft-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+    }
+
+    .craft-tile {
+      padding: 26px 22px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 205px;
+    }
+
+    .craft-metric {
+      font-family: var(--font-display);
+      font-size: 38px;
+      font-weight: 500;
+      color: var(--gold-accent);
+      line-height: 1;
+      margin-bottom: 16px;
+    }
+
+    .craft-title {
+      font-size: 15px;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .craft-body {
+      font-size: 13.5px;
+      color: var(--ink-secondary);
+      line-height: 1.6;
+    }
+
+    /* Maison Expansion Bento */
+    .maison-bento {
+      display: grid;
+      grid-template-columns: 7fr 5fr;
+      gap: 22px;
+    }
+
+    .bento-parfums { grid-row: span 2; }
+
+    .parfums-inner {
+      position: relative;
+      height: 100%;
+      min-height: 480px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 32px;
+      color: #FFFFFF;
+      background: #141416;
+    }
+
+    .parfums-inner img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.8;
+    }
+
+    .parfums-scrim {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(14, 14, 16, 0.94) 15%, rgba(14, 14, 16, 0.18) 72%);
+    }
+
+    .parfums-content {
+      position: relative;
+      z-index: 2;
+      max-width: 480px;
+    }
+
+    .parfums-content h3 {
+      font-family: var(--font-display);
+      font-size: clamp(1.85rem, 2.8vw, 2.6rem);
+      font-weight: 500;
+      margin-bottom: 10px;
+    }
+
+    .parfums-content p {
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.84);
+      line-height: 1.65;
+      margin-bottom: 20px;
+    }
+
+    .waitlist-form {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .waitlist-input {
+      flex: 1;
+      min-width: 200px;
+      min-height: 48px;
+      padding: 0 18px;
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(255, 255, 255, 0.26);
+      background: rgba(255, 255, 255, 0.13);
+      color: #FFFFFF;
+      font-size: 16px; /* Prevents iOS Safari auto-zoom! */
+      outline: none;
+    }
+
+    .waitlist-input::placeholder { color: rgba(255, 255, 255, 0.7); }
+
+    .waitlist-submit {
+      min-height: 48px;
+      padding: 0 22px;
+      border-radius: var(--radius-pill);
+      background: var(--gold-accent);
+      color: #121214;
+      font-size: 13.5px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .bento-side-card {
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 228px;
+    }
+
+    .bento-side-card.tinted {
+      background: #151518;
+      color: #F4F4F1;
+    }
+
+    .bento-side-card h3 {
+      font-family: var(--font-display);
+      font-size: 26px;
+      font-weight: 500;
+      margin-bottom: 10px;
+    }
+
+    .bento-side-card p {
+      font-size: 14px;
+      line-height: 1.65;
+      opacity: 0.84;
+      margin-bottom: 18px;
+    }
+
+    /* Footer */
+    .site-footer {
+      border-top: 1px solid var(--hairline);
+      padding: 60px 0 calc(48px + var(--safe-bottom));
+      background: #ECECE8;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 36px;
+      margin-bottom: 36px;
+    }
+
+    .footer-brand img { height: 48px; margin-bottom: 14px; }
+    .footer-brand p { font-size: 13.5px; color: var(--ink-secondary); max-width: 36ch; line-height: 1.65; }
+
+    .footer-col h4 {
+      font-size: 11.5px;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--ink-muted);
+      margin-bottom: 14px;
+    }
+
+    .footer-col ul { list-style: none; display: grid; gap: 10px; font-size: 13.5px; }
+
+    .footer-bottom {
+      padding-top: 22px;
+      border-top: 1px solid var(--hairline);
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+      font-size: 12.5px;
+      color: var(--ink-muted);
+    }
+
+    /* Mobile Thumb-Zone Bottom App Tab Bar (Single Fixed Bottom Rail on Phones) */
+    .mobile-tab-bar {
+      display: none;
+    }
+
+    /* Scrim + Unified Responsive Sheet (Centered Modal on Desktop -> Tactile Bottom Sheet on Mobile!) */
+    .backdrop-scrim {
+      position: fixed;
+      inset: 0;
+      z-index: 60;
+      background: rgba(18, 18, 20, 0.52);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.32s var(--ease-out);
+    }
+
+    .backdrop-scrim.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .sheet-grabber {
+      display: none;
+      width: 42px;
+      height: 4.5px;
+      border-radius: 999px;
+      background: rgba(18, 18, 20, 0.18);
+      margin: 10px auto 6px;
+    }
+
+    .product-sheet {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      z-index: 70;
+      transform: translate(-50%, -46%) scale(0.96);
+      width: min(1020px, 94vw);
+      max-height: 90dvh;
+      background: var(--bg-surface);
+      border-radius: var(--radius-outer);
+      overflow-y: auto;
+      overscroll-behavior: contain;
+      opacity: 0;
+      pointer-events: none;
+      transition: transform 0.4s var(--ease-spring), opacity 0.3s var(--ease-out);
+      box-shadow: 0 32px 80px rgba(0, 0, 0, 0.24);
+    }
+
+    .product-sheet.open {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translate(-50%, -50%) scale(1);
+    }
+
+    .sheet-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 1fr;
+    }
+
+    .sheet-gallery {
+      background: #F5F5F2;
+      padding: 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .sheet-snap-track {
+      display: flex;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: none;
+      border-radius: 18px;
+      background: #FFFFFF;
+      aspect-ratio: 4 / 3.3;
+    }
+
+    .sheet-snap-track::-webkit-scrollbar { display: none; }
+
+    .sheet-snap-slide {
+      flex: 0 0 100%;
+      width: 100%;
+      height: 100%;
+      scroll-snap-align: center;
+      scroll-snap-stop: always;
+    }
+
+    .sheet-snap-slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .sheet-thumbs {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+
+    .sheet-thumb {
+      aspect-ratio: 4 / 3;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 2px solid transparent;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .sheet-thumb.active { border-color: var(--gold-accent); }
+    .sheet-thumb img { width: 100%; height: 100%; object-fit: cover; }
+
+    .sheet-details {
+      padding: 32px 28px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+    }
+
+    .sheet-close {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      z-index: 4;
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: rgba(18, 18, 20, 0.07);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+    }
+
+    html[dir="rtl"] .sheet-close { right: auto; left: 16px; }
+
+    .dimensions-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin: 18px 0;
+    }
+
+    .dim-box {
+      padding: 11px 8px;
+      border-radius: 14px;
+      background: var(--bg-canvas);
+      text-align: center;
+    }
+
+    .dim-box strong {
+      display: block;
+      font-family: var(--font-display);
+      font-size: 21px;
+    }
+
+    .dim-box span { font-size: 11px; color: var(--ink-muted); }
+
+    .sheet-sticky-cta {
+      padding-top: 14px;
+      background: var(--bg-surface);
+    }
+
+    /* Slide-out / Bottom-Sheet Cart & Express UAE Checkout */
+    .cart-drawer {
+      position: fixed;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 75;
+      width: min(430px, 100vw);
+      background: var(--bg-surface);
+      transform: translateX(102%);
+      transition: transform 0.42s var(--ease-spring);
+      display: flex;
+      flex-direction: column;
+      box-shadow: -20px 0 60px rgba(0, 0, 0, 0.16);
+    }
+
+    html[dir="rtl"] .cart-drawer {
+      right: auto;
+      left: 0;
+      transform: translateX(-102%);
+    }
+
+    .cart-drawer.open { transform: translateX(0); }
+
+    .cart-header {
+      padding: 18px 22px;
+      border-bottom: 1px solid var(--hairline);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .cart-items {
+      flex: 1;
+      overflow-y: auto;
+      padding: 18px 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .cart-item {
+      display: grid;
+      grid-template-columns: 74px 1fr auto;
+      gap: 12px;
+      align-items: center;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--hairline);
+    }
+
+    .cart-item img {
+      width: 74px;
+      height: 62px;
+      object-fit: cover;
+      border-radius: 12px;
+      background: #F4F4F1;
+    }
+
+    .qty-btn {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: var(--bg-canvas);
+      font-size: 15px;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .cart-footer {
+      padding: 18px 22px calc(18px + var(--safe-bottom));
+      border-top: 1px solid var(--hairline);
+      background: var(--bg-canvas);
+      display: grid;
+      gap: 10px;
+    }
+
+    .apple-pay-btn {
+      min-height: 50px;
+      border-radius: var(--radius-pill);
+      background: #000000;
+      color: #FFFFFF;
+      font-size: 15px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+    }
+
+    .checkout-form-box {
+      display: none;
+      padding: 16px;
+      background: var(--bg-surface);
+      border-radius: 18px;
+      border: 1px solid var(--hairline);
+      gap: 10px;
+    }
+
+    .checkout-form-box.active { display: grid; }
+
+    .co-input {
+      width: 100%;
+      min-height: 46px;
+      padding: 0 14px;
+      border-radius: 12px;
+      border: 1px solid rgba(18, 18, 20, 0.16);
+      font-size: 16px;
+      font-family: inherit;
+      background: #FAFAFA;
+    }
+
+    /* Scroll Reveal */
+    .reveal {
+      opacity: 0;
+      transform: translateY(22px);
+      transition: opacity 0.65s var(--ease-out), transform 0.65s var(--ease-out);
+    }
+
+    .reveal.in-view { opacity: 1; transform: translateY(0); }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation: none !important; transition: none !important; }
+      .reveal { opacity: 1 !important; transform: none !important; }
+    }
+
+    /* ==========================================================
+       OBSESSIVE MOBILE ARCHITECTURE (< 900px & < 640px)
+       ========================================================== */
+    @media (max-width: 900px) {
+      .container { padding: 0 16px; }
+      .desktop-nav { display: none; }
+      .menu-burger { display: inline-flex; }
+      .site-header { height: 60px; }
+      .mobile-menu-overlay { top: 60px; }
+      .brand-logo img { height: 38px; }
+      .bag-trigger span.bag-text { display: none; }
+      .bag-trigger { padding: 0 11px; min-height: 40px; }
+
+      /* Mobile Hero: Visual First or Crisp Stacked Card fitting cleanly above fold */
+      .hero-section {
+        min-height: auto;
+        padding: 14px 0 32px;
+      }
+
+      .hero-grid {
+        grid-template-columns: 1fr;
+        gap: 18px;
+      }
+
+      .hero-media-col { order: -1; }
+
+      .hero-visual-stage { aspect-ratio: 16 / 10.5; }
+
+      .hero-title {
+        font-size: clamp(1.95rem, 7.8vw, 2.55rem);
+        margin-bottom: 8px;
+      }
+
+      html[dir="rtl"] .hero-title {
+        font-size: clamp(1.7rem, 6.8vw, 2.2rem);
+      }
+
+      .hero-sub {
+        font-size: 13.5px;
+        margin-bottom: 16px;
+      }
+
+      .hero-ctas {
+        display: grid;
+        grid-template-columns: 1.15fr 0.85fr;
+        gap: 8px;
+        margin-bottom: 16px;
+      }
+
+      .btn-primary-island,
+      .btn-secondary-pill {
+        width: 100%;
+        font-size: 13px;
+        min-height: 48px;
+      }
+
+      .section-space { padding: 56px 0; }
+      .unisex-desktop-note { display: none; }
+      .catalog-toolbar { margin-bottom: 20px; padding-bottom: 12px; }
+
+      .product-gallery-grid {
+        grid-template-columns: 1fr;
+        gap: 18px;
+      }
+
+      .card-snap-track { aspect-ratio: 4 / 3.45; }
+
+      .craft-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+      }
+
+      .craft-tile {
+        padding: 20px 16px;
+        min-height: 168px;
+      }
+
+      .craft-metric { font-size: 30px; margin-bottom: 10px; }
+
+      .maison-bento {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+
+      .parfums-inner {
+        min-height: 400px;
+        padding: 22px 18px;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 24px;
+      }
+
+      .site-footer {
+        padding-bottom: calc(96px + var(--safe-bottom));
+      }
+
+      /* Tactile iOS Bottom Sheet for Product Quick-View on Mobile */
+      .sheet-grabber { display: block; }
+
+      .product-sheet {
+        top: auto;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        width: 100%;
+        max-height: 92dvh;
+        border-radius: 26px 26px 0 0;
+        transform: translateY(104%);
+      }
+
+      .product-sheet.open {
+        transform: translateY(0);
+      }
+
+      .sheet-grid { grid-template-columns: 1fr; }
+      .sheet-gallery { padding: 8px 16px 14px; }
+      .sheet-details {
+        padding: 18px 18px calc(20px + var(--safe-bottom));
+      }
+
+      .sheet-sticky-cta {
+        position: sticky;
+        bottom: 0;
+        padding: 12px 0 calc(6px + var(--safe-bottom));
+        border-top: 1px solid var(--hairline);
+      }
+
+      /* Tactile iOS Bottom Sheet for Cart Drawer on Mobile */
+      .cart-drawer {
+        top: auto;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        width: 100%;
+        max-height: 90dvh;
+        border-radius: 26px 26px 0 0;
+        transform: translateY(104%) !important;
+      }
+
+      .cart-drawer.open {
+        transform: translateY(0) !important;
+      }
+
+      /* Single Thumb-Zone Mobile Bottom Tab Bar */
+      .mobile-tab-bar {
+        position: fixed;
+        left: 12px;
+        right: 12px;
+        bottom: calc(10px + var(--safe-bottom));
+        z-index: 45;
+        height: 58px;
+        border-radius: 999px;
+        background: rgba(18, 18, 20, 0.92);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        color: #FFFFFF;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        align-items: center;
+        padding: 0 6px;
+        box-shadow: 0 14px 34px rgba(18, 18, 20, 0.26);
+        transition: transform 0.32s var(--ease-out), opacity 0.25s var(--ease-out);
+      }
+
+      body.lock-scroll .mobile-tab-bar {
+        transform: translateY(130%);
+        opacity: 0;
+        pointer-events: none;
+      }
+
+      .mob-tab {
+        height: 48px;
+        border-radius: 999px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 2px;
+        font-size: 10.5px;
+        font-weight: 500;
+        color: rgba(255, 255, 255, 0.72);
+      }
+
+      .mob-tab i { font-size: 19px; }
+      .mob-tab.highlight { color: var(--gold-accent); font-weight: 600; }
+    }
+
+    @media (max-width: 345px) {
+      .hero-ctas { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="top-strip" data-i18n="topStrip">
+    Same-Day Concierge Delivery in Dubai & Abu Dhabi · Unisex Architectural Eyewear
+  </div>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <div class="nav-left">
+        <button class="menu-burger" id="burgerBtn" type="button" aria-label="Menu" aria-expanded="false">
+          <div class="burger-lines"><span></span><span></span></div>
+        </button>
+        <nav class="desktop-nav">
+          <a href="#eyewear" data-i18n="navEyewear">Eyewear</a>
+          <a href="#craft" data-i18n="navCraft">Optical Craft</a>
+          <a href="#maison" data-i18n="navMaison">Parfums & Atelier</a>
+        </nav>
+      </div>
+
+      <a href="#" class="brand-logo" aria-label="The H Group">
+        <img src="assets/brand/logo-gold-transparent.png" alt="The H Group" />
+      </a>
+
+      <div class="header-actions">
+        <button class="lang-btn" id="langBtn" type="button">
+          <i class="ph ph-globe"></i>
+          <span id="langLabel">العربية</span>
+        </button>
+        <button class="bag-trigger" id="openCartBtn" type="button" aria-label="Shopping Bag">
+          <i class="ph ph-handbag"></i>
+          <span class="bag-text" data-i18n="bagLabel">Bag</span>
+          <span class="bag-badge" id="bagCount">1</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Full-Screen Mobile Navigation Overlay -->
+  <div class="mobile-menu-overlay" id="mobileMenu">
+    <ul class="mobile-nav-list">
+      <li><a href="#eyewear" onclick="toggleMobileMenu(false)"><span data-i18n="navEyewear">Eyewear</span><i class="ph ph-arrow-up-right"></i></a></li>
+      <li><a href="#craft" onclick="toggleMobileMenu(false)"><span data-i18n="navCraft">Optical Craft</span><i class="ph ph-arrow-up-right"></i></a></li>
+      <li><a href="#maison" onclick="toggleMobileMenu(false)"><span data-i18n="navMaison">Parfums & Atelier</span><i class="ph ph-arrow-up-right"></i></a></li>
+    </ul>
+    <div class="bezel-shell">
+      <div class="bezel-core" style="padding:18px; display:flex; align-items:center; justify-content:space-between; gap:12px;">
+        <div>
+          <strong style="font-size:14px; display:block;" data-i18n="vipTitle">WhatsApp Styling Concierge</strong>
+          <span style="font-size:12px; color:var(--ink-secondary);">United Arab Emirates · AED</span>
+        </div>
+        <a href="https://wa.me/971567021940" target="_blank" rel="noopener" class="thumb-add-btn">
+          <i class="ph-fill ph-whatsapp-logo"></i> WhatsApp
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <main>
+    <!-- Hero Section -->
+    <section class="hero-section">
+      <div class="container hero-grid">
+        <div>
+          <span class="eyebrow-pill" data-i18n="heroEyebrow">First Edition · United Arab Emirates</span>
+          <h1 class="hero-title" data-i18n-html="heroTitle">
+            Frames sculpted for <em>light</em> and presence.
+          </h1>
+          <p class="hero-sub" data-i18n="heroSub">
+            Featherweight 18k gold-plated silhouettes and gradient sun lenses crafted for men and women across the Gulf.
+          </p>
+          <div class="hero-ctas">
+            <a href="#eyewear" class="btn-primary-island">
+              <span data-i18n="ctaExplore">Shop Collection</span>
+              <span class="icon-orb"><i class="ph ph-arrow-up-right"></i></span>
+            </a>
+            <button type="button" class="btn-secondary-pill" onclick="openModal('p01')">
+              <i class="ph ph-corners-out"></i>
+              <span data-i18n="ctaInspect">Inspect H-01</span>
+            </button>
+          </div>
+
+          <div class="lens-switcher-box">
+            <div class="lens-switcher-label">
+              <span data-i18n="previewLensLabel">Tap to Preview Lens Tint</span>
+              <strong id="activeHeroFrameName">Campaign Lookbook</strong>
+            </div>
+            <div class="lens-swatches" id="heroSwatches">
+              <button class="swatch-btn active" type="button" aria-label="Campaign" onclick="setHeroPreview('campaign', this)">
+                <span class="swatch-dot" style="background: linear-gradient(135deg, #1E1E22, #C59B43);"></span>
+              </button>
+              <button class="swatch-btn" type="button" aria-label="H-01" onclick="setHeroPreview('p01', this)">
+                <span class="swatch-dot" style="background: linear-gradient(180deg, #3A3B40, #9D7A54);"></span>
+              </button>
+              <button class="swatch-btn" type="button" aria-label="H-02" onclick="setHeroPreview('p02', this)">
+                <span class="swatch-dot" style="background: linear-gradient(180deg, #1F1E22, #433E42);"></span>
+              </button>
+              <button class="swatch-btn" type="button" aria-label="H-03" onclick="setHeroPreview('p03', this)">
+                <span class="swatch-dot" style="background: linear-gradient(180deg, #4F565C, #9AA0A6);"></span>
+              </button>
+              <button class="swatch-btn" type="button" aria-label="H-04" onclick="setHeroPreview('p04', this)">
+                <span class="swatch-dot" style="background: linear-gradient(180deg, #B99B72, #DFCBB0);"></span>
+              </button>
+              <button class="swatch-btn" type="button" aria-label="H-05" onclick="setHeroPreview('p05', this)">
+                <span class="swatch-dot" style="background: linear-gradient(180deg, #4B4051, #7C6E82);"></span>
+              </button>
+              <button class="swatch-btn" type="button" aria-label="H-06" onclick="setHeroPreview('p06', this)">
+                <span class="swatch-dot" style="background: linear-gradient(180deg, #8B8F96, #D4D7DC);"></span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="bezel-shell hero-media-col">
+          <div class="bezel-core">
+            <div class="hero-visual-stage" onclick="openModal(currentHeroProductId)">
+              <img id="heroMainImg" src="assets/products/hero_editorial_unisex.jpg" alt="The H Group Eyewear Campaign" fetchpriority="high" />
+            </div>
+            <div class="hero-caption-bar">
+              <strong id="heroBarTitle" data-i18n="heroBarDefault">H-01 Aura & H-02 Octa Noir · Unisex</strong>
+              <span style="color:var(--gold-deep); font-weight:700;" id="heroBarPrice">AED 1,290</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Eyewear Catalog -->
+    <section id="eyewear" class="section-space">
+      <div class="container">
+        <div class="section-head-stack reveal">
+          <h2 class="section-title" data-i18n="catTitle">The Debut Eyewear Collection</h2>
+          <p class="section-desc" data-i18n="catDesc">
+            Six unisex silhouettes in 18k gold-plated metalwork. Swipe any card sideways to view Studio, Model Fit, and Macro Gold Detail.
+          </p>
+        </div>
+
+        <div class="catalog-toolbar reveal">
+          <div class="filter-rail" id="filterBar">
+            <button class="filter-pill active" type="button" data-filter="all" data-i18n="filterAll">All 6 Frames</button>
+            <button class="filter-pill" type="button" data-filter="rimless" data-i18n="filterRimless">Rimless Gold</button>
+            <button class="filter-pill" type="button" data-filter="sculpted" data-i18n="filterSculpted">Full-Rim Geometric</button>
+            <button class="filter-pill" type="button" data-filter="daytint" data-i18n="filterDaytint">Day-to-Evening Tint</button>
+          </div>
+          <div class="unisex-desktop-note" style="font-size: 12.5px; color: var(--ink-muted);" data-i18n="unisexNote">
+            Unisex Fit · Velvet Presentation Box Included
+          </div>
+        </div>
+
+        <div class="product-gallery-grid" id="productGrid"></div>
+      </div>
+    </section>
+
+    <!-- Optical Craft -->
+    <section id="craft" class="section-space" style="padding-top: 16px;">
+      <div class="container">
+        <div class="section-head-stack reveal">
+          <h2 class="section-title" data-i18n="craftTitle">Engineered Like Fine Jewelry</h2>
+          <p class="section-desc" data-i18n="craftDesc">
+            Balanced for featherlight all-day comfort under intense Gulf sunlight.
+          </p>
+        </div>
+
+        <div class="craft-grid">
+          <div class="bezel-shell reveal">
+            <div class="bezel-core craft-tile">
+              <div class="craft-metric">18K</div>
+              <div>
+                <div class="craft-title" data-i18n="c1Title">Gold-Plated Hardware</div>
+                <p class="craft-body" data-i18n="c1Body">Corrosion-resistant titanium core finished in champagne gold.</p>
+              </div>
+            </div>
+          </div>
+          <div class="bezel-shell reveal">
+            <div class="bezel-core craft-tile">
+              <div class="craft-metric">UV400</div>
+              <div>
+                <div class="craft-title" data-i18n="c2Title">Optical Nylon Lenses</div>
+                <p class="craft-body" data-i18n="c2Body">Diamond-cut rimless edges with internal anti-reflective coating.</p>
+              </div>
+            </div>
+          </div>
+          <div class="bezel-shell reveal">
+            <div class="bezel-core craft-tile">
+              <div class="craft-metric">19g</div>
+              <div>
+                <div class="craft-title" data-i18n="c3Title">Zero-Pressure Fit</div>
+                <p class="craft-body" data-i18n="c3Body">Weight-balanced temples and crystal nose pads for men and women.</p>
+              </div>
+            </div>
+          </div>
+          <div class="bezel-shell reveal">
+            <div class="bezel-core craft-tile">
+              <div class="craft-metric">UAE</div>
+              <div>
+                <div class="craft-title" data-i18n="c4Title">Same-Day Courier</div>
+                <p class="craft-body" data-i18n="c4Body">Express delivery across Dubai, Abu Dhabi, and all Emirates.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Maison Expansion Bento -->
+    <section id="maison" class="section-space" style="padding-top: 16px;">
+      <div class="container">
+        <div class="section-head-stack reveal">
+          <span class="eyebrow-pill" data-i18n="maisonEyebrow">The Expanding House</span>
+          <h2 class="section-title" data-i18n="maisonTitle">One Maison, Built to Grow</h2>
+          <p class="section-desc" data-i18n="maisonDesc">
+            Starting with signature eyewear and expanding into extrait de parfum, fine textiles, and sartorial essentials curated by The H Group.
+          </p>
+        </div>
+
+        <div class="maison-bento">
+          <div class="bezel-shell bento-parfums reveal">
+            <div class="bezel-core parfums-inner">
+              <img src="assets/products/atelier_parfums_teaser.jpg" alt="The H Group Haute Parfumerie" loading="lazy" />
+              <div class="parfums-scrim"></div>
+              <div class="parfums-content">
+                <h3 data-i18n="parfumsTitle">Haute Parfumerie · Upcoming</h3>
+                <p data-i18n="parfumsBody">
+                  Small-batch aged oud, warm ambergris, and smoked bergamot extraits bottled in heavy crystal. Register for private UAE launch access.
+                </p>
+                <form class="waitlist-form" onsubmit="handleWaitlist(event)">
+                  <label for="waitlistEmail" style="position:absolute;width:1px;height:1px;overflow:hidden;">Email</label>
+                  <input id="waitlistEmail" type="email" required class="waitlist-input" placeholder="Your email address" />
+                  <button type="submit" class="waitlist-submit" id="waitlistBtn" data-i18n="waitlistCta">Notify Me</button>
+                </form>
+              </div>
+            </div>
+          </div>
+
+          <div class="bezel-shell reveal">
+            <div class="bezel-core bento-side-card">
+              <div>
+                <h3 data-i18n="sartorialTitle">Sartorial & Fine Textiles</h3>
+                <p data-i18n="sartorialBody">
+                  Upcoming drops of tailored tees, breathable Gulf linens, and fine fabrics designed to live effortlessly alongside our eyewear.
+                </p>
+              </div>
+              <div style="font-size: 12.5px; font-weight: 700; color: var(--gold-deep);" data-i18n="sartorialTag">
+                Chapter III · Apparel & Fabrics
+              </div>
+            </div>
+          </div>
+
+          <div class="bezel-shell reveal">
+            <div class="bezel-core bento-side-card tinted">
+              <div>
+                <h3 data-i18n="vipTitle">WhatsApp Styling Concierge</h3>
+                <p data-i18n="vipBody">
+                  Need personal frame advice or express gift dispatch in Dubai? Chat directly with our private client advisor.
+                </p>
+              </div>
+              <div>
+                <a href="https://wa.me/971567021940" target="_blank" rel="noopener" class="btn-primary-island" style="background:#FFFFFF; color:#121214; display:inline-flex;">
+                  <span data-i18n="vipCta">Chat on WhatsApp</span>
+                  <span class="icon-orb" style="background:rgba(18,18,20,0.08);"><i class="ph-fill ph-whatsapp-logo"></i></span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <img src="assets/brand/logo-gold-transparent.png" alt="The H Group" />
+          <p data-i18n="footerBio">
+            Contemporary unisex house of eyewear, haute parfumerie, and refined essentials based in the United Arab Emirates.
+          </p>
+        </div>
+        <div class="footer-col">
+          <h4 data-i18n="fCol1">Collections</h4>
+          <ul>
+            <li><a href="#eyewear" data-i18n="filterRimless">Rimless Gold</a></li>
+            <li><a href="#eyewear" data-i18n="filterSculpted">Full-Rim Geometric</a></li>
+            <li><a href="#maison" data-i18n="navMaison">Parfums & Atelier</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4 data-i18n="fCol2">Client Care</h4>
+          <ul>
+            <li><a href="#craft">UAE Same-Day Delivery</a></li>
+            <li><a href="#craft">1-Year Optical Warranty</a></li>
+            <li><a href="https://wa.me/971567021940" target="_blank" rel="noopener">WhatsApp Concierge</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4 data-i18n="fCol3">Payments</h4>
+          <ul>
+            <li><span>Apple Pay & Cards</span></li>
+            <li><span>Tabby & Tamara (4x)</span></li>
+            <li><span>Cash on Delivery (UAE)</span></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© THE H GROUP · United Arab Emirates</span>
+        <span>All prices in AED · VAT Included</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Mobile Thumb-Zone Bottom Navigation Bar -->
+  <nav class="mobile-tab-bar" aria-label="Quick Mobile Navigation">
+    <a href="#eyewear" class="mob-tab highlight">
+      <i class="ph ph-sunglasses"></i>
+      <span data-i18n="navEyewear">Eyewear</span>
+    </a>
+    <a href="#craft" class="mob-tab">
+      <i class="ph ph-diamond"></i>
+      <span data-i18n="mobTabCraft">Craft</span>
+    </a>
+    <a href="#maison" class="mob-tab">
+      <i class="ph ph-sparkle"></i>
+      <span data-i18n="mobTabParfums">Parfums</span>
+    </a>
+    <button type="button" class="mob-tab" onclick="openCart()">
+      <i class="ph ph-handbag"></i>
+      <span><span data-i18n="bagLabel">Bag</span> (<span id="mobBagCount">1</span>)</span>
+    </button>
+  </nav>
+
+  <!-- Scrim -->
+  <div class="backdrop-scrim" id="scrim" onclick="closeAllOverlays()"></div>
+
+  <!-- Tactile Bottom-Sheet / Modal Product Detail -->
+  <div class="product-sheet" id="productModal" role="dialog" aria-modal="true">
+    <div class="sheet-grabber" id="modalGrabber"></div>
+    <button class="sheet-close" type="button" onclick="closeAllOverlays()" aria-label="Close">
+      <i class="ph ph-x"></i>
+    </button>
+    <div class="sheet-grid">
+      <div class="sheet-gallery">
+        <div class="sheet-snap-track" id="modalSnapTrack"></div>
+        <div class="sheet-thumbs" id="modalThumbs"></div>
+      </div>
+      <div class="sheet-details">
+        <div>
+          <div class="product-series" id="modalSeries"></div>
+          <h3 class="section-title" style="font-size: 28px; margin-bottom: 6px;" id="modalTitle"></h3>
+          <div style="display:flex; align-items:baseline; gap:12px; margin-bottom: 14px;">
+            <span class="price-tag" style="font-size: 20px; color: var(--gold-deep);" id="modalPrice"></span>
+            <span style="font-size: 12px; color: var(--ink-muted);" id="modalTabby"></span>
+          </div>
+          <p class="section-desc" style="font-size: 14px;" id="modalDesc"></p>
+
+          <div class="dimensions-row">
+            <div class="dim-box">
+              <strong id="modalLensW">54 mm</strong>
+              <span data-i18n="dimLens">Lens Width</span>
+            </div>
+            <div class="dim-box">
+              <strong id="modalBridge">18 mm</strong>
+              <span data-i18n="dimBridge">Gold Bridge</span>
+            </div>
+            <div class="dim-box">
+              <strong id="modalTemple">145 mm</strong>
+              <span data-i18n="dimTemple">Temple</span>
+            </div>
+          </div>
+        </div>
+        <div class="sheet-sticky-cta">
+          <button type="button" class="btn-primary-island" style="width: 100%;" id="modalAddBtn">
+            <span id="modalAddText">Add to Bag</span>
+            <span class="icon-orb"><i class="ph ph-plus"></i></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tactile Bottom-Sheet / Slide-Over Cart + Express UAE Checkout -->
+  <aside class="cart-drawer" id="cartDrawer" aria-label="Shopping bag">
+    <div class="sheet-grabber" id="cartGrabber"></div>
+    <div class="cart-header">
+      <strong style="font-size: 16px;" data-i18n="yourBag">Your Shopping Bag</strong>
+      <button type="button" onclick="closeAllOverlays()" style="width:38px;height:38px;border-radius:50%;background:var(--bg-canvas);display:flex;align-items:center;justify-content:center;font-size:18px;"><i class="ph ph-x"></i></button>
+    </div>
+    <div class="cart-items" id="cartItems"></div>
+    <div class="cart-footer">
+      <div style="display:flex; justify-content:space-between; font-weight: 700; font-size: 15px;">
+        <span data-i18n="subtotal">Total (VAT Included)</span>
+        <span id="cartTotal">AED 1,290</span>
+      </div>
+
+      <div class="checkout-form-box" id="expressCheckoutBox">
+        <strong style="font-size:13.5px;" data-i18n="expressTitle">UAE Express Same-Day Dispatch</strong>
+        <input type="text" id="coName" class="co-input" placeholder="Full Name" />
+        <input type="tel" id="coPhone" class="co-input" placeholder="+971 5X XXX XXXX" />
+        <select id="coEmirate" class="co-input">
+          <option value="Dubai">Dubai (Same-Day Courier)</option>
+          <option value="Abu Dhabi">Abu Dhabi (Same-Day Courier)</option>
+          <option value="Sharjah">Sharjah</option>
+          <option value="Ajman / Other Emirates">Other Emirates</option>
+        </select>
+        <button type="button" class="btn-primary-island" style="width:100%;" onclick="submitExpressOrder()">
+          <span id="confirmOrderLabel" data-i18n="confirmOrder">Confirm Order (Cash / Card on Delivery)</span>
+          <span class="icon-orb"><i class="ph ph-check"></i></span>
+        </button>
+      </div>
+
+      <div id="primaryCheckoutBtns" style="display:grid; gap:8px;">
+        <button type="button" class="apple-pay-btn" onclick="toggleExpressCheckout()">
+          <i class="ph-fill ph-apple-logo" style="font-size:19px;"></i> Pay
+        </button>
+        <button type="button" class="btn-primary-island" style="width:100%;" onclick="toggleExpressCheckout()">
+          <span data-i18n="checkoutCta">Express UAE Checkout</span>
+          <span class="icon-orb"><i class="ph ph-arrow-right"></i></span>
+        </button>
+      </div>
+    </div>
+  </aside>
+
+  <script>
+    const PRODUCTS = [
+      {
+        id: 'p01',
+        code: 'H-01',
+        category: 'rimless',
+        nameEn: 'H-01 Aura Sunset',
+        nameAr: 'H-01 أورا غروب متدرج',
+        seriesEn: 'Unisex Rimless · 18K Gold Hardware',
+        seriesAr: 'للجنسين بدون إطار · مطلي ذهب 18',
+        lensEn: 'Smoke to Warm Amber Gradient',
+        lensAr: 'عدسات متدرجة من الدخاني إلى العنبر',
+        descEn: 'Signature rimless rounded-rectangle silhouette crafted with polished 18k gold bridge mountings and two-tone charcoal-to-amber sun lenses.',
+        descAr: 'تصميم مستطيل ناعم بدون إطار بجسر وأذرع مطلية بالذهب مع عدسات شمسية متدرجة تمنح وضوحاً فائقاً وأناقة هادئة.',
+        price: 1290,
+        dims: ['54 mm', '18 mm', '145 mm'],
+        studio: 'assets/products/p01_studio.jpg',
+        model: 'assets/products/p01_model.jpg',
+        detail: 'assets/products/p01_detail.jpg'
+      },
+      {
+        id: 'p02',
+        code: 'H-02',
+        category: 'sculpted',
+        nameEn: 'H-02 Octa Noir',
+        nameAr: 'H-02 أوكتا نوار المضلع',
+        seriesEn: 'Unisex Full-Rim · Gold & Matte Black',
+        seriesAr: 'للجنسين إطار هندسي · ذهب وخط أسود',
+        lensEn: 'Deep Obsidian Smoke UV400',
+        lensAr: 'عدسات دخانية داكنة بحماية UV400',
+        descEn: 'Architectural octagonal metal eyewire pairing brushed gold temples with a razor-thin matte black inner rim and deep smoke lenses.',
+        descAr: 'إطار هندسي ثماني يجمع بين الذهب المصقول وتحديد داخلي أسود رفيع مع عدسات دخانية داكنة لحضور جريء.',
+        price: 1450,
+        dims: ['52 mm', '19 mm', '145 mm'],
+        studio: 'assets/products/p02_studio.jpg',
+        model: 'assets/products/p02_model.jpg',
+        detail: 'assets/products/p02_detail.jpg'
+      },
+      {
+        id: 'p03',
+        code: 'H-03',
+        category: 'rimless',
+        nameEn: 'H-03 Mirage Slate',
+        nameAr: 'H-03 ميراج رمادي متدرج',
+        seriesEn: 'Unisex Rimless · Polished Gold Bridge',
+        seriesAr: 'للجنسين بدون إطار · جسر ذهبي مصقول',
+        lensEn: 'Cool Silver-Slate Ombre Lens',
+        lensAr: 'عدسات رمادية فضية متدرجة',
+        descEn: 'Clean soft-square rimless profile balancing warm 18k gold hardware against cool architectural slate-grey gradient lenses.',
+        descAr: 'توازن راقٍ بين دفء المعدن الذهبي الرفيع وبرودة العدسات الرمادية المتدرجة لإطلالة يومية عصرية.',
+        price: 1290,
+        dims: ['55 mm', '18 mm', '145 mm'],
+        studio: 'assets/products/p03_studio.jpg',
+        model: 'assets/products/p03_model.jpg',
+        detail: 'assets/products/p03_detail.jpg'
+      },
+      {
+        id: 'p04',
+        code: 'H-04',
+        category: 'daytint',
+        nameEn: 'H-04 Soleil Champagne',
+        nameAr: 'H-04 سوليه شامبين شفاف',
+        seriesEn: 'Unisex Day-to-Evening · Rimless Gold',
+        seriesAr: 'للجنسين للنهار والمساء · بدون إطار',
+        lensEn: 'Sheer Honey Champagne Tint',
+        lensAr: 'عدسات عسلية شفافة للنهار والمساء',
+        descEn: 'Designed for effortless indoor-to-outdoor transitions from Dubai malls to sunset terraces with luminous champagne-tinted lenses.',
+        descAr: 'مصممة للتنقل السلس بين الإضاءة الداخلية وشمس العصر بفضل عدسات الشامبين العسلية الشفافة.',
+        price: 1320,
+        dims: ['54 mm', '18 mm', '145 mm'],
+        studio: 'assets/products/p04_studio.jpg',
+        model: 'assets/products/p04_model.jpg',
+        detail: 'assets/products/p04_detail.jpg'
+      },
+      {
+        id: 'p05',
+        code: 'H-05',
+        category: 'rimless',
+        nameEn: 'H-05 Veloce Dusk',
+        nameAr: 'H-05 فيلوتشي النحيفة',
+        seriesEn: 'Unisex Slim Rectangle · Gold Hardware',
+        seriesAr: 'للجنسين قصة مستطيلة نحيفة · ذهب مصقول',
+        lensEn: 'Dusky Plum-Charcoal Tint',
+        lensAr: 'عدسات دخانية بلمسة بنفسجية داكنة',
+        descEn: 'Sleek narrow-profile rectangular rimless cut offering a sharp editorial silhouette paired with dusky plum-smoke lenses.',
+        descAr: 'قصة مستطيلة نحيفة حادة تمنح طابعاً عصرياً لافتاً مع عدسات دخانية مميزة وأذرع ذهبية فائقة الخفة.',
+        price: 1250,
+        dims: ['56 mm', '17 mm', '142 mm'],
+        studio: 'assets/products/p05_studio.jpg',
+        model: 'assets/products/p05_model.jpg',
+        detail: 'assets/products/p05_detail.jpg'
+      },
+      {
+        id: 'p06',
+        code: 'H-06',
+        category: 'daytint',
+        nameEn: 'H-06 Sovereign Crystal',
+        nameAr: 'H-06 سوفرين المنقوشة',
+        seriesEn: 'Prestige Edition · Engraved Gold Bridge',
+        seriesAr: 'إصدار خاص · جسر ذهبي منقوش وأطراف سوداء',
+        lensEn: 'Sheer Crystal Mist Grey',
+        lensAr: 'عدسات كريستال رمادية فاتحة',
+        descEn: 'Flagship rimless jewel featuring micro-engraved gold bridge and hinge lugs, contrasted with tailored black temple tips and crystal-grey lenses.',
+        descAr: 'القطعة الأبرز بتفاصيل ذهبية منقوشة بدقة المجوهرات على الجسر والمفصلات مع أطراف أذرع سوداء مريحة.',
+        price: 1590,
+        dims: ['54 mm', '18 mm', '145 mm'],
+        studio: 'assets/products/p06_studio.jpg',
+        model: 'assets/products/p06_model.jpg',
+        detail: 'assets/products/p06_detail.jpg'
+      }
+    ];
+
+    const I18N = {
+      en: {
+        topStrip: 'Same-Day Concierge Delivery in Dubai & Abu Dhabi · Unisex Architectural Eyewear',
+        navEyewear: 'Eyewear',
+        navCraft: 'Optical Craft',
+        navMaison: 'Parfums & Atelier',
+        mobTabCraft: 'Craft',
+        mobTabParfums: 'Parfums',
+        bagLabel: 'Bag',
+        heroEyebrow: 'First Edition · United Arab Emirates',
+        heroTitle: 'Frames sculpted for <em>light</em> and presence.',
+        heroSub: 'Featherweight 18k gold-plated silhouettes and gradient sun lenses crafted for men and women across the Gulf.',
+        ctaExplore: 'Shop Collection',
+        ctaInspect: 'Inspect H-01',
+        previewLensLabel: 'Tap to Preview Lens Tint',
+        heroBarDefault: 'H-01 Aura & H-02 Octa Noir · Unisex',
+        catTitle: 'The Debut Eyewear Collection',
+        catDesc: 'Six unisex silhouettes in 18k gold-plated metalwork. Swipe any card sideways to view Studio, Model Fit, and Macro Gold Detail.',
+        filterAll: 'All 6 Frames',
+        filterRimless: 'Rimless Gold',
+        filterSculpted: 'Full-Rim Geometric',
+        filterDaytint: 'Day-to-Evening Tint',
+        unisexNote: 'Unisex Fit · Velvet Presentation Box Included',
+        craftTitle: 'Engineered Like Fine Jewelry',
+        craftDesc: 'Balanced for featherlight all-day comfort under intense Gulf sunlight.',
+        c1Title: 'Gold-Plated Hardware',
+        c1Body: 'Corrosion-resistant titanium core finished in champagne gold.',
+        c2Title: 'Optical Nylon Lenses',
+        c2Body: 'Diamond-cut rimless edges with internal anti-reflective coating.',
+        c3Title: 'Zero-Pressure Fit',
+        c3Body: 'Weight-balanced temples and crystal nose pads for men and women.',
+        c4Title: 'Same-Day Courier',
+        c4Body: 'Express delivery across Dubai, Abu Dhabi, and all Emirates.',
+        maisonEyebrow: 'The Expanding House',
+        maisonTitle: 'One Maison, Built to Grow',
+        maisonDesc: 'Starting with signature eyewear and expanding into extrait de parfum, fine textiles, and sartorial essentials curated by The H Group.',
+        parfumsTitle: 'Haute Parfumerie · Upcoming',
+        parfumsBody: 'Small-batch aged oud, warm ambergris, and smoked bergamot extraits bottled in heavy crystal. Register for private UAE launch access.',
+        waitlistCta: 'Notify Me',
+        sartorialTitle: 'Sartorial & Fine Textiles',
+        sartorialBody: 'Upcoming drops of tailored tees, breathable Gulf linens, and fine fabrics designed to live effortlessly alongside our eyewear.',
+        sartorialTag: 'Chapter III · Apparel & Fabrics',
+        vipTitle: 'WhatsApp Styling Concierge',
+        vipBody: 'Need personal frame advice or express gift dispatch in Dubai? Chat directly with our private client advisor.',
+        vipCta: 'Chat on WhatsApp',
+        footerBio: 'Contemporary unisex house of eyewear, haute parfumerie, and refined essentials based in the United Arab Emirates.',
+        fCol1: 'Collections',
+        fCol2: 'Client Care',
+        fCol3: 'Payments',
+        dimLens: 'Lens Width',
+        dimBridge: 'Gold Bridge',
+        dimTemple: 'Temple',
+        yourBag: 'Your Shopping Bag',
+        subtotal: 'Total (VAT Included)',
+        checkoutCta: 'Express UAE Checkout',
+        expressTitle: 'UAE Express Same-Day Dispatch',
+        confirmOrder: 'Confirm UAE Order',
+        studioBtn: 'Studio',
+        modelBtn: 'Model',
+        detailBtn: 'Detail',
+        addBtn: 'Add to Bag'
+      },
+      ar: {
+        topStrip: 'توصيل خاص في نفس اليوم داخل دبي وأبوظبي · نظارات فاخرة للرجال والنساء',
+        navEyewear: 'النظارات',
+        navCraft: 'دقة الصناعة',
+        navMaison: 'العطور والأتيليه',
+        mobTabCraft: 'الصناعة',
+        mobTabParfums: 'العطور',
+        bagLabel: 'الحقيبة',
+        heroEyebrow: 'الإصدار الأول · الإمارات العربية المتحدة',
+        heroTitle: 'إطارات صُممت <em>للضوء</em> والحضور.',
+        heroSub: 'تصاميم خفيفة مطلية بالذهب عيار 18 وعدسات شمسية متدرجة صُممت لتلائم الرجال والنساء بأعلى درجات الأناقة.',
+        ctaExplore: 'تسوق المجموعة',
+        ctaInspect: 'فحص H-01',
+        previewLensLabel: 'اضغط لمعاينة لون العدسة',
+        heroBarDefault: 'نظارتا H-01 و H-02 · للرجال والنساء',
+        catTitle: 'مجموعة النظارات الافتتاحية',
+        catDesc: 'ستة موديلات للجنسين بمعدن مطلي بالذهب عيار 18. اسحب صورة أي نظارة يميناً أو يساراً لمشاهدة الاستوديو والموديل وتفاصيل الذهب.',
+        filterAll: 'كل الموديلات (6)',
+        filterRimless: 'ذهبي بدون إطار',
+        filterSculpted: 'إطار هندسي كامل',
+        filterDaytint: 'عدسات النهار والمساء',
+        unisexNote: 'للرجال والنساء · تُسلّم في علبة مخملية فاخرة',
+        craftTitle: 'مصنوعة بدقة المجوهرات',
+        craftDesc: 'توازن مثالي بين الخفة المطلقة والحماية الفائقة تحت شمس الخليج.',
+        c1Title: 'معدن مطلي ذهب 18',
+        c1Body: 'قلب معدني مقاوم للتآكل مطلي بطبقة غنية من الذهب الشامبين.',
+        c2Title: 'عدسات نايلون بصرية',
+        c2Body: 'حواف مقصوصة بالألماس مع طبقة داخلية مانعة للانعكاس.',
+        c3Title: 'ثبات بلا ضغط',
+        c3Body: 'توزيع متوازن للوزن ووسادات أنف كريستالية مريحة للجنسين.',
+        c4Title: 'توصيل في نفس اليوم',
+        c4Body: 'تسليم سريع في دبي وأبوظبي وجميع إمارات الدولة.',
+        maisonEyebrow: 'عالم ذا إتش جروب',
+        maisonTitle: 'دار واحدة قابلة للتوسع',
+        maisonDesc: 'انطلقنا من النظارات الفاخرة وصُمم المتجر ليتسع بسلاسة لخطوط العطور الشرقية والفرنسية والأقمشة والأزياء الراقية.',
+        parfumsTitle: 'العطور الفاخرة · قريباً',
+        parfumsBody: 'تركيبات خاصة من العود المعتق والعنبر والبرغموت في زجاجات كريستالية. سجّل بريدك للأولوية عند الإطلاق في الإمارات.',
+        waitlistCta: 'أعلمني',
+        sartorialTitle: 'الأزياء والأقمشة المختارة',
+        sartorialBody: 'إصدارات قادمة من التيشيرتات الفاخرة والأقمشة الراقية المختارة بعناية.',
+        sartorialTag: 'الفصل الثالث · الأزياء والأقمشة',
+        vipTitle: 'مستشار الأناقة عبر واتساب',
+        vipBody: 'تحتاج مساعدة في اختيار المقاس الأنسب لوجهك أو توصيل هدية مستعجل في دبي؟ تواصل معنا مباشرة.',
+        vipCta: 'تحدث عبر واتساب',
+        footerBio: 'دار معاصرة للنظارات والعطور والمقتنيات المختارة للرجال والنساء في دولة الإمارات العربية المتحدة.',
+        fCol1: 'الأقسام',
+        fCol2: 'خدمة العملاء',
+        fCol3: 'طرق الدفع',
+        dimLens: 'عرض العدسة',
+        dimBridge: 'الجسر الذهبي',
+        dimTemple: 'طول الذراع',
+        yourBag: 'حقيبة التسوق',
+        subtotal: 'الإجمالي (شامل الضريبة)',
+        checkoutCta: 'إتمام الطلب السريع',
+        expressTitle: 'شحن سريع داخل الإمارات',
+        confirmOrder: 'تأكيد الطلب الآن',
+        studioBtn: 'استوديو',
+        modelBtn: 'موديل',
+        detailBtn: 'تفاصيل',
+        addBtn: 'أضف للحقيبة'
+      }
+    };
+
+    let currentLang = 'en';
+    let currentFilter = 'all';
+    let currentHeroProductId = 'p01';
+    let cart = [{ id: 'p01', qty: 1 }];
+
+    function renderCatalog() {
+      const grid = document.getElementById('productGrid');
+      const t = I18N[currentLang];
+      const list = currentFilter === 'all'
+        ? PRODUCTS
+        : PRODUCTS.filter(p => p.category === currentFilter);
+
+      grid.innerHTML = list.map(p => {
+        const name = currentLang === 'ar' ? p.nameAr : p.nameEn;
+        const series = currentLang === 'ar' ? p.seriesAr : p.seriesEn;
+        const lens = currentLang === 'ar' ? p.lensAr : p.lensEn;
+        const installment = Math.round(p.price / 4);
+        const tabbyTxt = currentLang === 'ar' ? `أو 4 دفعات × ${installment} د.إ عبر Tabby` : `or 4 × AED ${installment} with Tabby`;
+
+        return `
+          <article class="bezel-shell reveal in-view">
+            <div class="bezel-core">
+              <div class="card-slider-wrap">
+                <div class="card-snap-track" id="track_${p.id}" onscroll="syncCardDots('${p.id}', this)">
+                  <div class="card-slide" onclick="openModal('${p.id}')"><img src="${p.studio}" alt="${name} studio" loading="lazy" /></div>
+                  <div class="card-slide" onclick="openModal('${p.id}')"><img src="${p.model}" alt="${name} model" loading="lazy" /></div>
+                  <div class="card-slide" onclick="openModal('${p.id}')"><img src="${p.detail}" alt="${name} detail" loading="lazy" /></div>
+                </div>
+                <div class="card-dots-pill" id="dots_${p.id}">
+                  <button type="button" class="slide-pill-btn active" onclick="scrollCardTo('${p.id}', 0)">${t.studioBtn}</button>
+                  <button type="button" class="slide-pill-btn" onclick="scrollCardTo('${p.id}', 1)">${t.modelBtn}</button>
+                  <button type="button" class="slide-pill-btn" onclick="scrollCardTo('${p.id}', 2)">${t.detailBtn}</button>
+                </div>
+                <button type="button" class="expand-orb-btn" onclick="openModal('${p.id}')" aria-label="Inspect">
+                  <i class="ph ph-arrows-out-simple"></i>
+                </button>
+              </div>
+              <div class="product-meta">
+                <div class="product-meta-top">
+                  <div>
+                    <div class="product-series">${series}</div>
+                    <h3 class="product-name" onclick="openModal('${p.id}')">${name}</h3>
+                  </div>
+                  <div class="price-block">
+                    <span class="price-tag">AED ${p.price.toLocaleString()}</span>
+                    <span class="tabby-micro">${tabbyTxt}</span>
+                  </div>
+                </div>
+                <div class="product-meta-bottom">
+                  <span class="product-specs-inline">${lens}</span>
+                  <button type="button" class="thumb-add-btn" onclick="addToCart('${p.id}')">
+                    <i class="ph ph-plus"></i> ${t.addBtn}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </article>
+        `;
+      }).join('');
+    }
+
+    function scrollCardTo(id, index) {
+      const track = document.getElementById(`track_${id}`);
+      if (!track) return;
+      const dirFactor = currentLang === 'ar' ? -1 : 1;
+      track.scrollTo({ left: index * track.clientWidth * dirFactor, behavior: 'smooth' });
+    }
+
+    function syncCardDots(id, track) {
+      const w = track.clientWidth || 1;
+      const idx = Math.min(2, Math.max(0, Math.round(Math.abs(track.scrollLeft) / w)));
+      const dots = document.querySelectorAll(`#dots_${id} .slide-pill-btn`);
+      dots.forEach((b, i) => b.classList.toggle('active', i === idx));
+    }
+
+    function setHeroPreview(target, btn) {
+      document.querySelectorAll('#heroSwatches .swatch-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const img = document.getElementById('heroMainImg');
+      const title = document.getElementById('heroBarTitle');
+      const price = document.getElementById('heroBarPrice');
+      const label = document.getElementById('activeHeroFrameName');
+
+      if (target === 'campaign') {
+        currentHeroProductId = 'p01';
+        img.src = 'assets/products/hero_editorial_unisex.jpg';
+        title.textContent = I18N[currentLang].heroBarDefault;
+        price.textContent = 'AED 1,290';
+        label.textContent = currentLang === 'ar' ? 'إطلالة الحملة' : 'Campaign Lookbook';
+      } else {
+        currentHeroProductId = target;
+        const p = PRODUCTS.find(x => x.id === target);
+        img.src = p.studio;
+        title.textContent = currentLang === 'ar' ? `${p.nameAr} · ${p.lensAr}` : `${p.nameEn} · ${p.lensEn}`;
+        price.textContent = `AED ${p.price.toLocaleString()}`;
+        label.textContent = currentLang === 'ar' ? p.nameAr : p.nameEn;
+      }
+    }
+
+    function toggleMobileMenu(force) {
+      const menu = document.getElementById('mobileMenu');
+      const burger = document.getElementById('burgerBtn');
+      const next = typeof force === 'boolean' ? force : !menu.classList.contains('open');
+      menu.classList.toggle('open', next);
+      burger.classList.toggle('active', next);
+      burger.setAttribute('aria-expanded', String(next));
+      document.body.classList.toggle('lock-scroll', next);
+    }
+
+    document.getElementById('burgerBtn').addEventListener('click', () => toggleMobileMenu());
+
+    function openModal(id) {
+      const p = PRODUCTS.find(x => x.id === id) || PRODUCTS[0];
+      const name = currentLang === 'ar' ? p.nameAr : p.nameEn;
+      document.getElementById('modalSeries').textContent = currentLang === 'ar' ? p.seriesAr : p.seriesEn;
+      document.getElementById('modalTitle').textContent = name;
+      document.getElementById('modalPrice').textContent = `AED ${p.price.toLocaleString()}`;
+      document.getElementById('modalTabby').textContent = currentLang === 'ar'
+        ? `أو 4 دفعات بدون فوائد بقيمة ${Math.round(p.price / 4)} د.إ`
+        : `or 4 interest-free payments of AED ${Math.round(p.price / 4)}`;
+      document.getElementById('modalDesc').textContent = currentLang === 'ar' ? p.descAr : p.descEn;
+      document.getElementById('modalLensW').textContent = p.dims[0];
+      document.getElementById('modalBridge').textContent = p.dims[1];
+      document.getElementById('modalTemple').textContent = p.dims[2];
+      document.getElementById('modalAddText').textContent = currentLang === 'ar'
+        ? `أضف للحقيبة · AED ${p.price.toLocaleString()}`
+        : `Add to Bag · AED ${p.price.toLocaleString()}`;
+
+      const shots = [p.studio, p.model, p.detail];
+      const track = document.getElementById('modalSnapTrack');
+      track.innerHTML = shots.map(src => `<div class="sheet-snap-slide"><img src="${src}" alt="${name}" /></div>`).join('');
+      track.scrollLeft = 0;
+
+      const thumbs = document.getElementById('modalThumbs');
+      thumbs.innerHTML = shots.map((src, i) => `
+        <div class="sheet-thumb ${i === 0 ? 'active' : ''}" onclick="scrollModalShot(${i}, this)">
+          <img src="${src}" alt="${name}" />
+        </div>
+      `).join('');
+
+      track.onscroll = () => {
+        const idx = Math.min(2, Math.max(0, Math.round(Math.abs(track.scrollLeft) / (track.clientWidth || 1))));
+        thumbs.querySelectorAll('.sheet-thumb').forEach((el, i) => el.classList.toggle('active', i === idx));
+      };
+
+      document.getElementById('modalAddBtn').onclick = () => addToCart(p.id);
+
+      document.body.classList.add('lock-scroll');
+      document.getElementById('scrim').classList.add('open');
+      document.getElementById('productModal').classList.add('open');
+    }
+
+    function scrollModalShot(i, el) {
+      const track = document.getElementById('modalSnapTrack');
+      const dirFactor = currentLang === 'ar' ? -1 : 1;
+      track.scrollTo({ left: i * track.clientWidth * dirFactor, behavior: 'smooth' });
+      document.querySelectorAll('#modalThumbs .sheet-thumb').forEach(t => t.classList.remove('active'));
+      el.classList.add('active');
+    }
+
+    function openCart() {
+      toggleMobileMenu(false);
+      document.body.classList.add('lock-scroll');
+      document.getElementById('scrim').classList.add('open');
+      document.getElementById('cartDrawer').classList.add('open');
+    }
+
+    function addToCart(id) {
+      const found = cart.find(x => x.id === id);
+      if (found) found.qty += 1;
+      else cart.push({ id, qty: 1 });
+      renderCart();
+      document.getElementById('productModal').classList.remove('open');
+      openCart();
+    }
+
+    function updateQty(id, delta) {
+      const idx = cart.findIndex(x => x.id === id);
+      if (idx === -1) return;
+      cart[idx].qty += delta;
+      if (cart[idx].qty <= 0) cart.splice(idx, 1);
+      renderCart();
+    }
+
+    function renderCart() {
+      const count = cart.reduce((sum, item) => sum + item.qty, 0);
+      document.getElementById('bagCount').textContent = count;
+      document.getElementById('mobBagCount').textContent = count;
+      const box = document.getElementById('cartItems');
+      let total = 0;
+
+      if (cart.length === 0) {
+        box.innerHTML = `<p style="color:var(--ink-muted); font-size:14px; padding:24px 0;">${currentLang === 'ar' ? 'حقيبة التسوق فارغة حالياً.' : 'Your bag is currently empty.'}</p>`;
+      } else {
+        box.innerHTML = cart.map(item => {
+          const p = PRODUCTS.find(x => x.id === item.id);
+          total += p.price * item.qty;
+          const name = currentLang === 'ar' ? p.nameAr : p.nameEn;
+          return `
+            <div class="cart-item">
+              <img src="${p.studio}" alt="${name}" />
+              <div>
+                <strong style="font-size:14px; display:block; margin-bottom:3px;">${name}</strong>
+                <span style="font-size:12.5px; color:var(--ink-secondary);">AED ${p.price.toLocaleString()}</span>
+              </div>
+              <div style="display:flex; align-items:center; gap:8px;">
+                <button type="button" class="qty-btn" onclick="updateQty('${p.id}', -1)">-</button>
+                <span style="font-size:13.5px;font-weight:700;min-width:16px;text-align:center;">${item.qty}</span>
+                <button type="button" class="qty-btn" onclick="updateQty('${p.id}', 1)">+</button>
+              </div>
+            </div>
+          `;
+        }).join('');
+      }
+      document.getElementById('cartTotal').textContent = `AED ${total.toLocaleString()}`;
+    }
+
+    function toggleExpressCheckout() {
+      if (cart.length === 0) return;
+      document.getElementById('expressCheckoutBox').classList.add('active');
+      document.getElementById('primaryCheckoutBtns').style.display = 'none';
+    }
+
+    function submitExpressOrder() {
+      const lbl = document.getElementById('confirmOrderLabel');
+      lbl.textContent = currentLang === 'ar' ? 'تم استلام طلبك بنجاح · سنتواصل معك فوراً' : 'Order Received · Concierge Notified';
+      setTimeout(() => {
+        cart = [];
+        renderCart();
+        document.getElementById('expressCheckoutBox').classList.remove('active');
+        document.getElementById('primaryCheckoutBtns').style.display = 'grid';
+        lbl.textContent = I18N[currentLang].confirmOrder;
+        closeAllOverlays();
+      }, 1600);
+    }
+
+    function closeAllOverlays() {
+      document.body.classList.remove('lock-scroll');
+      document.getElementById('scrim').classList.remove('open');
+      document.getElementById('productModal').classList.remove('open');
+      document.getElementById('cartDrawer').classList.remove('open');
+      document.getElementById('mobileMenu').classList.remove('open');
+      document.getElementById('burgerBtn').classList.remove('active');
+    }
+
+    // Tactile Swipe-Down-to-Dismiss on Mobile Bottom Sheets
+    function attachSheetSwipeDismiss(sheetEl) {
+      let startY = 0;
+      let deltaY = 0;
+      sheetEl.addEventListener('touchstart', (e) => {
+        if (sheetEl.scrollTop > 4) return;
+        startY = e.touches[0].clientY;
+        deltaY = 0;
+      }, { passive: true });
+      sheetEl.addEventListener('touchmove', (e) => {
+        if (!startY) return;
+        deltaY = e.touches[0].clientY - startY;
+        if (deltaY > 0 && window.innerWidth <= 900) {
+          sheetEl.style.transform = `translateY(${deltaY}px)`;
+        }
+      }, { passive: true });
+      sheetEl.addEventListener('touchend', () => {
+        if (deltaY > 95 && window.innerWidth <= 900) {
+          sheetEl.style.transform = '';
+          closeAllOverlays();
+        } else {
+          sheetEl.style.transform = '';
+        }
+        startY = 0;
+        deltaY = 0;
+      });
+    }
+
+    attachSheetSwipeDismiss(document.getElementById('productModal'));
+    attachSheetSwipeDismiss(document.getElementById('cartDrawer'));
+
+    function handleWaitlist(e) {
+      e.preventDefault();
+      document.getElementById('waitlistBtn').textContent = currentLang === 'ar' ? 'تم التسجيل' : 'Registered';
+      e.target.reset();
+    }
+
+    function applyLanguage() {
+      document.documentElement.lang = currentLang;
+      document.documentElement.dir = currentLang === 'ar' ? 'rtl' : 'ltr';
+      document.getElementById('langLabel').textContent = currentLang === 'ar' ? 'EN' : 'العربية';
+      const dict = I18N[currentLang];
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (dict[key]) el.textContent = dict[key];
+      });
+      document.querySelectorAll('[data-i18n-html]').forEach(el => {
+        const key = el.getAttribute('data-i18n-html');
+        if (dict[key]) el.innerHTML = dict[key];
+      });
+      renderCatalog();
+      renderCart();
+    }
+
+    document.getElementById('langBtn').addEventListener('click', () => {
+      currentLang = currentLang === 'en' ? 'ar' : 'en';
+      applyLanguage();
+    });
+
+    document.getElementById('openCartBtn').addEventListener('click', openCart);
+
+    document.querySelectorAll('#filterBar .filter-pill').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('#filterBar .filter-pill').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentFilter = btn.getAttribute('data-filter');
+        renderCatalog();
+      });
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeAllOverlays();
+    });
+
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('in-view');
+      });
+    }, { threshold: 0.1 });
+
+    renderCatalog();
+    renderCart();
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+  </script>
+</body>
+</html>
